@@ -17,7 +17,6 @@ public class MatrizOrtogonal {
             Aux.setIzquierda(base);
             base = Aux;
         }
-        for(NodoOrtogonal = )
         
     }
     
