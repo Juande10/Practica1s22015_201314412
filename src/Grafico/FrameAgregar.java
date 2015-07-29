@@ -1,16 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Grafico;
 
+import Estructuras.ListaObjetos;
+import Estructuras.NodoObjeto;
+import javax.swing.ImageIcon;
 /**
  *
  * @author Juande
  */
 public class FrameAgregar extends javax.swing.JFrame {
 
+    ListaObjetos ListaObj = new ListaObjetos();
     /**
      * Creates new form FrameAgregar
      */
@@ -51,12 +50,18 @@ public class FrameAgregar extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtCastillo = new javax.swing.JTextField();
         btnCastillo = new javax.swing.JButton();
+        PRUEBA = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnSuelo.setText("Agregar Suelo");
+        btnSuelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSueloActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnSuelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, -1));
         getContentPane().add(txtSuelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 120, -1));
 
@@ -126,6 +131,14 @@ public class FrameAgregar extends javax.swing.JFrame {
         btnCastillo.setText("Agregar Castillo");
         getContentPane().add(btnCastillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 470, -1, -1));
 
+        PRUEBA.setText("PRUEBA");
+        PRUEBA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PRUEBAActionPerformed(evt);
+            }
+        });
+        getContentPane().add(PRUEBA, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 510, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FondoSeleccion.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 868, -1));
@@ -137,6 +150,21 @@ public class FrameAgregar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtVidaActionPerformed
 
+    private void btnSueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSueloActionPerformed
+        // TODO add your handling code here:
+        AgregarObjeto(txtSuelo.getText(), "Suelo", (ImageIcon) jLabel3.getIcon());
+    }//GEN-LAST:event_btnSueloActionPerformed
+
+    private void PRUEBAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PRUEBAActionPerformed
+        // TODO add your handling code here:
+        ListaObj.Visualizar();
+    }//GEN-LAST:event_PRUEBAActionPerformed
+
+    //Metodo para insertar un objeto en la lista
+    public void AgregarObjeto(String nombre, String tipo, ImageIcon imagen){
+        NodoObjeto Objeto = new NodoObjeto(nombre, tipo, imagen);
+        ListaObj.InsertarObjeto(Objeto, nombre, tipo, imagen);
+    }
     /**
      * @param args the command line arguments
      */
@@ -170,9 +198,12 @@ public class FrameAgregar extends javax.swing.JFrame {
                 new FrameAgregar().setVisible(true);
             }
         });
+        
+              
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton PRUEBA;
     private javax.swing.JButton btnCastillo;
     private javax.swing.JButton btnGoomba;
     private javax.swing.JButton btnHongo;

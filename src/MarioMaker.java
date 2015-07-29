@@ -1,4 +1,3 @@
-
 import Grafico.InterfazPrincipal;
 
 /*
@@ -12,7 +11,6 @@ import Grafico.InterfazPrincipal;
  * @author Juande
  */
 public class MarioMaker {
-
     /**
      * @param args the command line arguments
      */

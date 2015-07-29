@@ -1,6 +1,6 @@
 package Estructuras;
 
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 
 /**
  *
@@ -13,7 +13,7 @@ public class ListaObjetos {
         cabeza = null;
     }
     
-    public void InsertarObjeto(NodoObjeto objeto, String nombre, String tipo, ImageIcon imagen){
+    public void InsertarObjeto(NodoObjeto objeto, String nombre, String tipo, Icon imagen){
         NodoObjeto nuevo = new NodoObjeto(nombre,tipo,imagen);
         if(this.getCabeza()==null){
             this.setCabeza(nuevo);

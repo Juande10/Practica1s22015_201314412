@@ -1,6 +1,6 @@
 package Estructuras;
 
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 
 /**
  *
@@ -10,10 +10,10 @@ public class NodoObjeto {
     private NodoObjeto siguiente;
     private NodoObjeto anterior;
     private String nombre;
-    private ImageIcon imagen;
+    private Icon imagen;
     private String tipo;
     
-    public NodoObjeto(String nombre, String tipo, ImageIcon imagen){
+    public NodoObjeto(String nombre, String tipo, Icon imagen){
         this.nombre = nombre;
         this.imagen = imagen;
         this.tipo = tipo;
@@ -62,20 +62,6 @@ public class NodoObjeto {
     }
 
     /**
-     * @return the imagen
-     */
-    public ImageIcon getImagen() {
-        return imagen;
-    }
-
-    /**
-     * @param imagen the imagen to set
-     */
-    public void setImagen(ImageIcon imagen) {
-        this.imagen = imagen;
-    }
-
-    /**
      * @return the tipo
      */
     public String getTipo() {
@@ -87,5 +73,19 @@ public class NodoObjeto {
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    /**
+     * @return the imagen
+     */
+    public Icon getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(Icon imagen) {
+        this.imagen = imagen;
     }
 }
