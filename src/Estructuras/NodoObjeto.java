@@ -11,10 +11,12 @@ public class NodoObjeto {
     private NodoObjeto anterior;
     private String nombre;
     private ImageIcon imagen;
+    private String tipo;
     
-    public NodoObjeto(String nombre, ImageIcon imagen){
+    public NodoObjeto(String nombre, String tipo, ImageIcon imagen){
         this.nombre = nombre;
         this.imagen = imagen;
+        this.tipo = tipo;
     }
 
     /**
@@ -71,5 +73,19 @@ public class NodoObjeto {
      */
     public void setImagen(ImageIcon imagen) {
         this.imagen = imagen;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

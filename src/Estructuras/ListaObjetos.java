@@ -13,8 +13,8 @@ public class ListaObjetos {
         cabeza = null;
     }
     
-    public void InsertarObjeto(NodoObjeto objeto, String nombre, ImageIcon imagen){
-        NodoObjeto nuevo = new NodoObjeto(nombre, imagen);
+    public void InsertarObjeto(NodoObjeto objeto, String nombre, String tipo, ImageIcon imagen){
+        NodoObjeto nuevo = new NodoObjeto(nombre,tipo,imagen);
         if(this.getCabeza()==null){
             this.setCabeza(nuevo);
         }else{
@@ -24,6 +24,13 @@ public class ListaObjetos {
             }
             actual.setSiguiente(nuevo);
             actual.setAnterior(actual);
+        }
+    }
+    
+    public void Visualizar(){
+        NodoObjeto visual;
+        for(visual = getCabeza(); visual != null; visual=visual.getSiguiente()){
+            System.out.println(visual.getNombre() + " De tipo: " + visual.getTipo());
         }
     }
 
