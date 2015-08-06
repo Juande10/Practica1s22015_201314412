@@ -1,6 +1,7 @@
 package Estructuras;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
