@@ -6,6 +6,7 @@
 package Grafico;
 
 import Estructuras.ListaObjetos;
+import Estructuras.MatrizOrtogonal;
 import Estructuras.NodoObjeto;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -82,10 +83,13 @@ public class InterfazAgregar extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Suelo.png"))); // NOI18N
         jLabel2.setText("jLabel2");
+        jLabel2.setPreferredSize(new java.awt.Dimension(40, 40));
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 40, 40));
+        jLabel2.getAccessibleContext().setAccessibleDescription("");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Pared.png"))); // NOI18N
         jLabel3.setText("jLabel3");
+        jLabel3.setPreferredSize(new java.awt.Dimension(40, 40));
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 40, -1));
         getContentPane().add(txtPared, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 80, -1));
 
@@ -245,6 +249,8 @@ public class InterfazAgregar extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         ListaObj.Visualizar();
+        MatrizOrtogonal tablero = new MatrizOrtogonal();
+        tablero.Visualizar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     

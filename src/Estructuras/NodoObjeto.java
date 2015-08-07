@@ -20,6 +20,10 @@ public class NodoObjeto {
         this.tipo = tipo;
     }
 
+    public void EliminarObjeto(){
+        
+    }
+    
     /**
      * @return the siguiente
      */
