@@ -14,8 +14,8 @@ public class ListaObjetos {
         cabeza = null;
     }
     
-    public void InsertarObjeto(NodoObjeto objeto, String nombre, String tipo, Icon imagen){
-        NodoObjeto nuevo = new NodoObjeto(nombre,tipo,imagen);
+    public void InsertarObjeto(NodoObjeto objeto, int ID, String nombre, String tipo, Icon imagen){
+        NodoObjeto nuevo = new NodoObjeto(ID,nombre,tipo,imagen);
         if(this.getCabeza()==null){
             this.setCabeza(nuevo);
         }else{
@@ -24,7 +24,7 @@ public class ListaObjetos {
                 actual = actual.getSiguiente();
             }
             actual.setSiguiente(nuevo);
-            actual.setAnterior(actual);
+            nuevo.setAnterior(actual);
         }
     }
     
@@ -35,6 +35,51 @@ public class ListaObjetos {
         }
     }
 
+    public void Eliminar(int ID){
+        if(ID == this.getCabeza().getID()){
+            NodoObjeto aux = this.getCabeza().getSiguiente();
+            if(aux==null){
+                this.cabeza= null;
+            }else{
+                aux.setAnterior(null);
+                this.setCabeza(aux);
+            }   
+        }else{
+            NodoObjeto aux;
+            for(aux = this.getCabeza(); aux != null; aux = aux.getSiguiente()){
+                if(aux.getID() == ID && aux.getSiguiente() != null){
+                    NodoObjeto temp1 = aux.getAnterior();
+                    NodoObjeto temp2 = aux.getSiguiente();
+                    temp1.setSiguiente(temp2);
+                    temp2.setAnterior(temp1);
+                    aux.setSiguiente(null);
+                    aux.setAnterior(null);
+                    break;
+                }
+                else if(aux.getID() == ID && aux.getSiguiente() == null){
+                    NodoObjeto temp1 = aux.getAnterior();
+                    temp1.setSiguiente(null);
+                    aux.setAnterior(null);
+                }
+            }
+        }
+    }
+    
+    public Boolean Personas(NodoObjeto personaje){
+        NodoObjeto recorrer;
+        Boolean resp;
+        Boolean result = true;
+        for(recorrer = this.cabeza; recorrer != null; recorrer = recorrer.getSiguiente()){    
+            if(personaje.getTipo() == recorrer.getTipo()){
+                resp = true;
+                result = resp;
+            }else{
+                resp = false;
+                result = resp;
+            }
+        }
+        return result;
+    }
     /**
      * @return the cabeza
      */

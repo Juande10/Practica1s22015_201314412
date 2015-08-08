@@ -2,22 +2,30 @@ package Estructuras;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 /**
  *
  * @author Juande
  */
-public class NodoObjeto {
+public class NodoObjeto extends JButton{
     private NodoObjeto siguiente;
     private NodoObjeto anterior;
     private String nombre;
     private Icon imagen;
     private String tipo;
+    private int ID;
+    private JButton imagenB;
     
-    public NodoObjeto(String nombre, String tipo, Icon imagen){
+    public NodoObjeto(int ID,String nombre, String tipo, Icon imagen){
+        this.anterior = null;
+        this.siguiente = null;
+        this.ID = ID;
         this.nombre = nombre;
         this.imagen = imagen;
         this.tipo = tipo;
+        this.imagenB = new JButton(nombre);
+        this.imagenB.setIcon(imagen);
     }
 
     public void EliminarObjeto(){
@@ -92,5 +100,19 @@ public class NodoObjeto {
      */
     public void setImagen(Icon imagen) {
         this.imagen = imagen;
+    }
+
+    /**
+     * @return the ID
+     */
+    public int getID() {
+        return ID;
+    }
+
+    /**
+     * @param ID the ID to set
+     */
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }

@@ -16,8 +16,8 @@ public class NodoOrtogonal extends JLabel{
     public NodoOrtogonal abajo;
     public NodoOrtogonal siguiente;
     public NodoOrtogonal anterior;
-    private NodoFila anteriorCol;
-    private NodoFila abajoFil;
+    private NodoFila anteriorFil;
+    private NodoColumna abajoCol;
     private int tamanox;
     private int tamanoy;
     private int posx;
@@ -26,18 +26,18 @@ public class NodoOrtogonal extends JLabel{
     private boolean estado;
     private NodoObjeto objeto;
     
-    public NodoOrtogonal(){
+    public NodoOrtogonal(int posx, int posy){
         this.abajo=null;
         this.arriba=null;
         this.anterior=null;
         this.siguiente=null;
         this.estado = false;
-        this.posx=0;
-        this.posy=0;
+        this.posx=posx;
+        this.posy=posy;
         this.tamanox=0;
         this.tamanoy=0;
-        this.anteriorCol = null;
-        this.abajoFil = null;
+        this.anteriorFil = null;
+        this.abajoCol = null;
         
     }
 
@@ -154,32 +154,31 @@ public class NodoOrtogonal extends JLabel{
     }
 
     /**
-     * @return the anteriorCol
+     * @return the anteriorFil
      */
-    public NodoFila getAnteriorCol() {
-        return anteriorCol;
+    public NodoFila getAnteriorFil() {
+        return anteriorFil;
     }
 
     /**
-     * @param anteriorCol the anteriorCol to set
+     * @param anteriorFil the anteriorFil to set
      */
-    public void setAnteriorCol(NodoFila anteriorCol) {
-        this.anteriorCol = anteriorCol;
+    public void setAnteriorFil(NodoFila anteriorFil) {
+        this.anteriorFil = anteriorFil;
     }
 
     /**
-     * @return the abajoFil
+     * @return the abajoCol
      */
-    public NodoFila getAbajoFil() {
-        return abajoFil;
+    public NodoColumna getAbajoCol() {
+        return abajoCol;
     }
 
     /**
-     * @param abajoFil the abajoFil to set
+     * @param abajoCol the abajoCol to set
      */
-    public void setAbajoFil(NodoFila abajoFil) {
-        this.abajoFil = abajoFil;
+    public void setAbajoCol(NodoColumna abajoCol) {
+        this.abajoCol = abajoCol;
     }
-
     
 }

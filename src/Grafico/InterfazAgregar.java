@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
 import javax.swing.Icon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,7 +20,9 @@ import javax.swing.Icon;
  */
 public class InterfazAgregar extends javax.swing.JFrame {
 
-    ListaObjetos ListaObj = new ListaObjetos();
+    public static ListaObjetos ListaObj = new ListaObjetos();
+    public static MatrizOrtogonal tablero;
+    public int ID = 1;
     /**
      * Creates new form InterfazAgregar
      */
@@ -199,66 +202,81 @@ public class InterfazAgregar extends javax.swing.JFrame {
 
     private void btnSueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSueloActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(txtSuelo.getText(), "Suelo", jLabel3.getIcon());
+        AgregarObjeto(ID,txtSuelo.getText(), "Suelo", jLabel2.getIcon());
+        ID++;
         txtSuelo.setText(null);
     }//GEN-LAST:event_btnSueloActionPerformed
 
     private void btnParedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParedActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(txtPared.getText(), "Pared", jLabel2.getIcon());
+        AgregarObjeto(ID,txtPared.getText(), "Pared", jLabel3.getIcon());
+        ID++;
         txtPared.setText(null);
     }//GEN-LAST:event_btnParedActionPerformed
 
     private void btnTortugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTortugaActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(txtTortuga.getText(), "Koopa", jLabel5.getIcon());
+        AgregarObjeto(ID,txtTortuga.getText(), "Koopa", jLabel4.getIcon());
+        ID++;
         txtTortuga.setText(null);
     }//GEN-LAST:event_btnTortugaActionPerformed
 
     private void btnMarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarioActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(txtMario.getText(), "Mario", jLabel8.getIcon());
-        txtMario.setText(null);
+            AgregarObjeto(ID,txtMario.getText(), "Mario", jLabel5.getIcon());
+            ID++;
+            txtMario.setText(null);
+        
     }//GEN-LAST:event_btnMarioActionPerformed
 
     private void btnGoombaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoombaActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(txtGoomba.getText(), "Goomba", jLabel4.getIcon());
+        AgregarObjeto(ID,txtGoomba.getText(), "Goomba", jLabel6.getIcon());
+        ID++;
         txtGoomba.setText(null);
     }//GEN-LAST:event_btnGoombaActionPerformed
 
     
     private void btnHongoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHongoActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(txtHongo.getText(), "Hongo de Vida", jLabel7.getIcon());
+        AgregarObjeto(ID,txtHongo.getText(), "Hongo de Vida", jLabel8.getIcon());
+        ID++;
         txtHongo.setText(null);
     }//GEN-LAST:event_btnHongoActionPerformed
 
     private void btnMonedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonedaActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(txtMoneda.getText(), "Moneda", jLabel6.getIcon());
+        AgregarObjeto(ID,txtMoneda.getText(), "Moneda", jLabel7.getIcon());
+        ID++;
         txtMoneda.setText(null);
     }//GEN-LAST:event_btnMonedaActionPerformed
 
     private void btnCastilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCastilloActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(txtCastillo.getText(), "Castillo",  jLabel9.getIcon());
+        AgregarObjeto(ID,txtCastillo.getText(), "Castillo",  jLabel9.getIcon());
+        ID++;
         txtCastillo.setText(null);
     }//GEN-LAST:event_btnCastilloActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         ListaObj.Visualizar();
-        MatrizOrtogonal tablero = new MatrizOrtogonal();
-        tablero.Visualizar();
+        /*MatrizOrtogonal*/tablero = new MatrizOrtogonal();
+        
+        this.setVisible(false);
+        ConfirmarObjetos conf = new ConfirmarObjetos();
+        conf.setVisible(true);
+        //tablero.Visualizar();
+        //tablero.ImprimirMatriz();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
     
     //Metodo para insertar un objeto en la lista
-    public void AgregarObjeto(String nombre, String tipo, Icon imagen){
-        NodoObjeto Objeto = new NodoObjeto(nombre, tipo, imagen);
-        ListaObj.InsertarObjeto(Objeto, nombre, tipo, imagen);
+    public void AgregarObjeto(int ID,String nombre, String tipo, Icon imagen){
+        NodoObjeto Objeto = new NodoObjeto(ID,nombre, tipo, imagen);
+        ListaObj.InsertarObjeto(Objeto,ID, nombre, tipo, imagen);
     }
     /**
      * @param args the command line arguments
