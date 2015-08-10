@@ -6,6 +6,7 @@
 package Estructuras;
 
 import javax.swing.JLabel;
+import javax.swing.TransferHandler;
 
 /**
  *
@@ -22,6 +23,7 @@ public class NodoOrtogonal extends JLabel{
     private int tamanoy;
     private int posx;
     private int posy;
+    public JLabel imagen;
     
     private boolean estado;
     private NodoObjeto objeto;
@@ -38,7 +40,8 @@ public class NodoOrtogonal extends JLabel{
         this.tamanoy=0;
         this.anteriorFil = null;
         this.abajoCol = null;
-        
+        this.imagen = new JLabel();
+        imagen.setTransferHandler(new TransferHandler("icon"));
     }
 
     /**

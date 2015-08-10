@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package Grafico;
+import Estructuras.ListaObjetos;
+import Estructuras.MatrizOrtogonal;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,6 +18,9 @@ import javax.swing.JPanel;
  * @author Juande
  */
 public class InterfazPrincipal extends javax.swing.JFrame {
+    
+    public static ListaObjetos ListaObj = new ListaObjetos();
+    public static MatrizOrtogonal tablero = new MatrizOrtogonal();
     /**
      * Creates new form InterfazPrincipal
      */
@@ -44,13 +49,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Entrar");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(303, 250, 90, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Fondo.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");

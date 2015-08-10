@@ -70,7 +70,7 @@ public class ListaObjetos {
         Boolean resp;
         Boolean result = true;
         for(recorrer = this.cabeza; recorrer != null; recorrer = recorrer.getSiguiente()){    
-            if(personaje.getTipo() == recorrer.getTipo()){
+            if(personaje.getTipo().equals(recorrer.getTipo())){
                 resp = true;
                 result = resp;
             }else{

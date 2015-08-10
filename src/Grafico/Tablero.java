@@ -10,8 +10,11 @@ import Estructuras.MatrizOrtogonal;
 import Estructuras.NodoObjeto;
 import Estructuras.NodoOrtogonal;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.TransferHandler;
 
 /**
  *
@@ -19,52 +22,96 @@ import javax.swing.JPanel;
  */
 public class Tablero extends javax.swing.JFrame {
 
+    Graficadora grafica = new Graficadora();
+    int IdObj;
     /**
      * Creates new form Tablero
      */
+    //public JLabel imagen;
     public Tablero() {
         initComponents();
         //muestra objetos en el cuadrito
-        MostrarObjeto(InterfazAgregar.ListaObj);
+        MostrarObjeto(InterfazPrincipal.ListaObj);
         //pinta los nodos de la matriz
-        PintarMatriz(InterfazAgregar.tablero, this.jPanel1);
+        PintarMatriz();
+
         setLocationRelativeTo(null);
+        jLabel1.setTransferHandler(new TransferHandler("icon"));
+        
+        //imagen.setTransferHandler(new TransferHandler("icon"));
     }
     
     public void MostrarObjeto(ListaObjetos lista){
         if(lista.getCabeza() == null){
-            
+            jLabel1.setIcon(null);
+            jLabel1.setText(null);
         }else{
             NodoObjeto aux = lista.getCabeza();
+            this.jLabel1.setText(Integer.toString(aux.getID()));
             this.jLabel1.setIcon(aux.getImagen());
         }
         
     }
     
-    public void PintarMatriz(MatrizOrtogonal Ortogonal, JPanel panel){
+    private void jLabel1ActionPerformed(){
+        
+    }
+    
+    public void PintarMatriz(/*MatrizOrtogonal Ortogonal*/){
         ImageIcon nuevoicon = new ImageIcon(getClass().getResource("/Imagenes/Cielo1.png"));
-         NodoOrtogonal cabeza = Ortogonal.getRaiz();
+         //NodoOrtogonal cabeza = Ortogonal.getRaiz();
          NodoOrtogonal aux1;
          NodoOrtogonal aux2;
+         NodoOrtogonal aux3;
          int x=0;
          int y=0;
-         JLabel imagen;
-         for(aux1 = cabeza; aux1 != null; aux1 = aux1.getArriba()){
+         //JLabel imagen;
+         //Imprime desde la fila ultima hasta la primera
+        aux1 = InterfazPrincipal.tablero.getRaiz();
+        while(aux1.getArriba() != null){
+             aux1 = aux1.getArriba();
+        }
+        for(aux2 = aux1; aux2 != null ; aux2 = aux2.getAbajo()){
+            aux3 = aux2;
+            y++;
+            while(aux3 != null){
+                x++;
+                /*imagen = new JLabel();
+                imagen.setText("("+aux3.getPosx()+","+aux3.getPosy()+")");
+                //imagen.setIcon(nuevoicon);
+                imagen.setBounds((35*x),(35*y), 34, 34);*/
+                aux3.imagen.setBounds(40*x, 40*y, 39, 39);
+                aux3.imagen.setIcon(nuevoicon);
+                /*if(imagen.getIcon() != null){
+                    System.out.println("la imagen es:" + imagen.getIcon());
+                }else{
+                    System.out.println("no tiene imagen");
+                }*/
+                jPanel1.add(aux3.imagen);
+                aux3 = aux3.getSiguiente();
+            }
+            x=0;
+        }
+        
+        //Imprime de la primera a la ultima fila
+        /*for(aux1 = cabeza; aux1 != null; aux1 = aux1.getArriba()){
              aux2 = aux1;
              y++;
              while(aux2 != null){
                  x++;
                  System.out.println(aux2.getPosx()+","+aux2.getPosy());
                  imagen = new JLabel();
-                 imagen.setIcon(nuevoicon);
+                 //imagen.setIcon(nuevoicon);
+                 imagen.setText("("+aux2.getPosx()+","+aux2.getPosy()+")");
                  imagen.setBounds((35*x),(35*y), 34, 34);
                  panel.add(imagen);
                  aux2 = aux2.getSiguiente();
              }
              x=0;
-         }
+         }*/
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,46 +126,90 @@ public class Tablero extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(4000, 4000));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1022, Short.MAX_VALUE)
+            .addGap(0, 4000, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
+            .addGap(0, 4000, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanel1);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabel1MouseReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel2.setText("Objetos para Utilizar:");
 
         jButton1.setText("Pausa");
 
+        jButton2.setText("Insertar Columna");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Insertar Fila");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Graficar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(173, 173, 173)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addGap(90, 90, 90)
+                        .addComponent(jButton1)
+                        .addGap(86, 86, 86)
+                        .addComponent(jButton2)
+                        .addGap(35, 35, 35)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +218,10 @@ public class Tablero extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)
+                        .addComponent(jButton3)
+                        .addComponent(jButton4))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,6 +231,84 @@ public class Tablero extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Boton para insertr columna
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        InterfazPrincipal.tablero.InsertarColumna();
+        /*this.dispose();
+        Tablero juego = new Tablero();
+        juego.setVisible(true);*/
+        //jPanel1.remove(imagen);
+        jPanel1.removeAll();
+        PintarMatriz();
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+    //Boton para insertar fila
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        InterfazPrincipal.tablero.InsertarFila();
+        /*this.dispose();
+        Tablero juego = new Tablero();
+        juego.setVisible(true);*/
+        jPanel1.removeAll();
+        PintarMatriz();
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        try {
+            grafica.dibujar_personajes(InterfazPrincipal.ListaObj, "Objetos");
+            JOptionPane.showMessageDialog(rootPane, "Se creo las graficas de Objetos");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Error al crear la grafica de personajes");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+        // TODO add your handling code here:
+        if(InterfazPrincipal.ListaObj.getCabeza() == null){
+            jLabel1.setIcon(null);
+            jLabel1.setText(null);
+            JOptionPane.showMessageDialog(null, "Ya no hay objetos en la lista");
+        }else{
+            JComponent comp = (JComponent) evt.getSource();
+            TransferHandler handler = comp.getTransferHandler();
+            handler.exportAsDrag(comp, evt, TransferHandler.COPY);
+            jLabel1.revalidate();
+            jLabel1.repaint();
+            MostrarObjeto(InterfazPrincipal.ListaObj);
+            InterfazPrincipal.ListaObj.Eliminar(Integer.parseInt(jLabel1.getText()));
+        }
+        
+        
+    }//GEN-LAST:event_jLabel1MousePressed
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//este no funciona
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:      
+    }//GEN-LAST:event_jLabel1MouseClicked
+//NO FUNCIONA
+    private void jLabel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLabel1MouseReleased
+
+    
     /**
      * @param args the command line arguments
      */
@@ -175,6 +347,9 @@ public class Tablero extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

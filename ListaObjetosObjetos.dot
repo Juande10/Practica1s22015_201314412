@@ -1,0 +1,13 @@
+digraph G
+{
+ node [shape=rectangule];
+node [style=filled];
+node [fillcolor="#EEEEEE"]
+;node [color="#EEEEEE"]
+edge [color="#31CEF0"]
+Suelo;
+Pared;
+Koopa;
+Suelo->Pared->Koopa;
+
+}

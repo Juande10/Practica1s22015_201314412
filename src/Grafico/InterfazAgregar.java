@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
  */
 public class InterfazAgregar extends javax.swing.JFrame {
 
-    public static ListaObjetos ListaObj = new ListaObjetos();
-    public static MatrizOrtogonal tablero;
+    //public static ListaObjetos ListaObj = new ListaObjetos();
+    //public static MatrizOrtogonal tablero;
     public int ID = 1;
     /**
      * Creates new form InterfazAgregar
@@ -182,13 +182,13 @@ public class InterfazAgregar extends javax.swing.JFrame {
         });
         getContentPane().add(btnCastillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 480, -1, -1));
 
-        jButton1.setText("Prueba");
+        jButton1.setText("Confirmar->");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 530, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 570, 120, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FondoSeleccion.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -223,10 +223,33 @@ public class InterfazAgregar extends javax.swing.JFrame {
 
     private void btnMarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarioActionPerformed
         // TODO add your handling code here:
+        if(InterfazPrincipal.ListaObj.getCabeza() == null){
             AgregarObjeto(ID,txtMario.getText(), "Mario", jLabel5.getIcon());
             ID++;
             txtMario.setText(null);
-        
+        }else{
+            NodoObjeto verificar;
+            Boolean ver = false;
+            Boolean aux;
+            for(verificar = InterfazPrincipal.ListaObj.getCabeza(); verificar != null; verificar = verificar.getSiguiente()){
+                if(verificar.getTipo().equals("Mario")){
+                    
+                    ver = true;
+                    aux= ver;
+                    break;
+                }else{
+                    ver = false;
+                    aux = ver;
+                }
+            }
+            if(ver == false){
+                AgregarObjeto(ID,txtMario.getText(), "Mario", jLabel5.getIcon());
+                ID++;
+                txtMario.setText(null);
+            }else{
+                JOptionPane.showMessageDialog(null, "Ya existe un mario en la lista de objetos");
+            }
+        }               
     }//GEN-LAST:event_btnMarioActionPerformed
 
     private void btnGoombaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoombaActionPerformed
@@ -239,7 +262,7 @@ public class InterfazAgregar extends javax.swing.JFrame {
     
     private void btnHongoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHongoActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(ID,txtHongo.getText(), "Hongo de Vida", jLabel8.getIcon());
+        AgregarObjeto(ID,txtHongo.getText(), "Hongo", jLabel8.getIcon());
         ID++;
         txtHongo.setText(null);
     }//GEN-LAST:event_btnHongoActionPerformed
@@ -253,15 +276,40 @@ public class InterfazAgregar extends javax.swing.JFrame {
 
     private void btnCastilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCastilloActionPerformed
         // TODO add your handling code here:
-        AgregarObjeto(ID,txtCastillo.getText(), "Castillo",  jLabel9.getIcon());
-        ID++;
-        txtCastillo.setText(null);
+        if(InterfazPrincipal.ListaObj.getCabeza() == null){
+            AgregarObjeto(ID,txtCastillo.getText(), "Castillo",  jLabel9.getIcon());
+            ID++;
+            txtCastillo.setText(null);
+        }else{
+            NodoObjeto verificar;
+            Boolean ver = false;
+            Boolean aux;
+            for(verificar = InterfazPrincipal.ListaObj.getCabeza(); verificar != null; verificar = verificar.getSiguiente()){
+                if(verificar.getTipo().equals("Castillo")){
+                    
+                    ver = true;
+                    aux= ver;
+                    break;
+                }else{
+                    ver = false;
+                    aux = ver;
+                }
+            }
+            if(ver == false){
+                AgregarObjeto(ID,txtCastillo.getText(), "Castillo",  jLabel9.getIcon());
+                ID++;
+                txtCastillo.setText(null);
+            }else{
+                JOptionPane.showMessageDialog(null, "Ya existe un castillo en la lista de objetos");
+            }
+        }
+        
     }//GEN-LAST:event_btnCastilloActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ListaObj.Visualizar();
-        /*MatrizOrtogonal*/tablero = new MatrizOrtogonal();
+        InterfazPrincipal.ListaObj.Visualizar();
+        /*MatrizOrtogonal tablero = new MatrizOrtogonal();*/
         
         this.setVisible(false);
         ConfirmarObjetos conf = new ConfirmarObjetos();
@@ -276,7 +324,7 @@ public class InterfazAgregar extends javax.swing.JFrame {
     //Metodo para insertar un objeto en la lista
     public void AgregarObjeto(int ID,String nombre, String tipo, Icon imagen){
         NodoObjeto Objeto = new NodoObjeto(ID,nombre, tipo, imagen);
-        ListaObj.InsertarObjeto(Objeto,ID, nombre, tipo, imagen);
+        InterfazPrincipal.ListaObj.InsertarObjeto(Objeto,ID, nombre, tipo, imagen);
     }
     /**
      * @param args the command line arguments

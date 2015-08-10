@@ -13,10 +13,10 @@ public class MatrizOrtogonal {
     
     public MatrizOrtogonal(){
         this.cabeza = new NodoRaiz();
-        this.InsertarColumnaBase(10);
-        this.InsertarFilaBase(10);
+        this.InsertarColumnaBase(3);
+        this.InsertarFilaBase(3);
         raiz = new NodoOrtogonal(1,1);
-        this.LlenarMatriz(10,10);
+        this.LlenarMatriz(3,3);
     }
     
     public void Insertar(int columnas, int filas){
@@ -183,6 +183,62 @@ public class MatrizOrtogonal {
             C++;
         }
         return C;
+    }
+    
+    
+    public void InsertarColumna(){
+        NodoOrtogonal aux1 = this.getRaiz();
+        NodoOrtogonal aux2;
+        NodoOrtogonal nuevo;
+        NodoOrtogonal nuevo2;
+        NodoOrtogonal ultimo;
+        //mientras que el siguiente del aux1 sea diferente de null
+        while( aux1.getSiguiente() != null){
+            //aux1 va a ser su siguiente
+            aux1 = aux1.getSiguiente();
+        }
+        nuevo = new NodoOrtogonal(aux1.getPosx()+ 1, 1);
+        nuevo.setAnterior(aux1);
+        aux1.setSiguiente(nuevo);
+        
+        aux2 = aux1;
+        while(aux2.getArriba() != null){
+            aux2 = aux2.getArriba();
+            nuevo2 = new NodoOrtogonal(nuevo.getPosx(),aux2.getPosy());
+            aux2.setSiguiente(nuevo2);
+            nuevo2.setAnterior(aux2);
+            nuevo2.setAbajo(nuevo);
+            nuevo.setArriba(nuevo2);
+            nuevo = nuevo.getArriba();
+        }
+        /*ultimo = new NodoOrtogonal(nuevo.getPosx(), aux2.getPosy());
+        ultimo.setAnterior(aux2);
+        aux2.setSiguiente(ultimo);
+        ultimo.setAbajo(nuevo);*/
+    }
+    
+    public void InsertarFila(){
+        NodoOrtogonal aux1 = this.getRaiz();
+        NodoOrtogonal aux2;
+        NodoOrtogonal nuevo;
+        NodoOrtogonal nuevo2;
+        while(aux1.getArriba() != null){
+            aux1 = aux1.getArriba();
+        }
+        nuevo = new NodoOrtogonal (1,aux1.getPosy()+1);
+        nuevo.setAbajo(aux1);
+        aux1.setArriba(nuevo);
+        
+        aux2 = aux1;
+        while(aux2.getSiguiente() != null){
+            aux2 = aux2.getSiguiente();
+            nuevo2 = new NodoOrtogonal(aux2.getPosx(), nuevo.getPosy());
+            aux2.setArriba(nuevo2);
+            nuevo2.setAbajo(aux2);
+            nuevo2.setAnterior(nuevo);
+            nuevo.setSiguiente(nuevo2);
+            nuevo = nuevo.getSiguiente();
+        } 
     }
     
     /**
