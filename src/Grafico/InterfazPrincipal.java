@@ -19,8 +19,8 @@ import javax.swing.JPanel;
  */
 public class InterfazPrincipal extends javax.swing.JFrame {
     
-    public static ListaObjetos ListaObj = new ListaObjetos();
-    public static ListaObjetos pila = new ListaObjetos();
+    public static final ListaObjetos ListaObj = new ListaObjetos();
+    public static final ListaObjetos pila = new ListaObjetos();
     public static Boolean ListaPila = false;
     public static MatrizOrtogonal tablero = new MatrizOrtogonal();
     /**

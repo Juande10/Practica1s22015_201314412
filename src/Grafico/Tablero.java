@@ -9,6 +9,8 @@ import Estructuras.ListaObjetos;
 import Estructuras.MatrizOrtogonal;
 import Estructuras.NodoObjeto;
 import Estructuras.NodoOrtogonal;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -31,29 +33,38 @@ public class Tablero extends javax.swing.JFrame {
     public Tablero() {
         initComponents();
         //muestra objetos en el cuadrito
-        if(InterfazPrincipal.ListaPila == false){
-            MostrarObjeto(InterfazPrincipal.ListaObj);
-        }else{
-            MostrarObjeto(InterfazPrincipal.pila);
-        }      
+        MostrarObjeto();
         //pinta los nodos de la matriz
-        PintarMatriz();
-
+        PintarMatriz();        
         setLocationRelativeTo(null);
         jLabel1.setTransferHandler(new TransferHandler("icon"));
         
         //imagen.setTransferHandler(new TransferHandler("icon"));
     }
     
-    public void MostrarObjeto(ListaObjetos lista){
-        if(lista.getCabeza() == null){
+    public void MostrarObjeto(){
+        jLabel1.removeAll();
+        if(InterfazPrincipal.ListaPila == true){
+            if(InterfazPrincipal.pila.getCabeza() == null){
             jLabel1.setIcon(null);
             jLabel1.setText(null);
+            }else{
+                NodoObjeto aux = InterfazPrincipal.pila.getCabeza();
+                this.jLabel1.setText(Integer.toString(aux.getID()));
+                this.jLabel1.setIcon(aux.getImagen());
+            }
         }else{
-            NodoObjeto aux = lista.getCabeza();
-            this.jLabel1.setText(Integer.toString(aux.getID()));
-            this.jLabel1.setIcon(aux.getImagen());
+            if(InterfazPrincipal.ListaObj.getCabeza() == null){
+            jLabel1.setIcon(null);
+            jLabel1.setText(null);
+            }else{
+                NodoObjeto aux = InterfazPrincipal.ListaObj.getCabeza();
+                this.jLabel1.setText(Integer.toString(aux.getID()));
+                this.jLabel1.setIcon(aux.getImagen());
+            }
         }
+        
+        
         
     }
     
@@ -63,13 +74,11 @@ public class Tablero extends javax.swing.JFrame {
     
     public void PintarMatriz(/*MatrizOrtogonal Ortogonal*/){
         ImageIcon nuevoicon = new ImageIcon(getClass().getResource("/Imagenes/Cielo1.png"));
-         //NodoOrtogonal cabeza = Ortogonal.getRaiz();
          NodoOrtogonal aux1;
          NodoOrtogonal aux2;
          NodoOrtogonal aux3;
          int x=0;
          int y=0;
-         //JLabel imagen;
          //Imprime desde la fila ultima hasta la primera
         aux1 = InterfazPrincipal.tablero.getRaiz();
         while(aux1.getArriba() != null){
@@ -84,18 +93,22 @@ public class Tablero extends javax.swing.JFrame {
                 imagen.setText("("+aux3.getPosx()+","+aux3.getPosy()+")");
                 //imagen.setIcon(nuevoicon);
                 imagen.setBounds((35*x),(35*y), 34, 34);*/
+                aux3.Click(this,Integer.parseInt(this.jLabel1.getText()));
                 aux3.imagen.setBounds(40*x, 40*y, 39, 39);
-                aux3.imagen.setIcon(nuevoicon);
-                /*if(imagen.getIcon() != null){
-                    System.out.println("la imagen es:" + imagen.getIcon());
+                if(aux3.getObjeto() == null){
+                    aux3.imagen.setIcon(nuevoicon);
                 }else{
-                    System.out.println("no tiene imagen");
-                }*/
+                    aux3.imagen.setIcon(aux3.getObjeto().getImagen());
+                }
+                jLabel1.removeAll();
+                MostrarObjeto();
+                jPanel1.revalidate();
+                jPanel1.repaint();
                 jPanel1.add(aux3.imagen);
-                aux3 = aux3.getSiguiente();
+                aux3 = aux3.getSiguiente();              
             }
-            x=0;
-        }
+            x=0;           
+        }        
         
         //Imprime de la primera a la ultima fila
         /*for(aux1 = cabeza; aux1 != null; aux1 = aux1.getArriba()){
@@ -235,14 +248,12 @@ public class Tablero extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     //Boton para insertr columna
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         InterfazPrincipal.tablero.InsertarColumna();
-        /*this.dispose();
-        Tablero juego = new Tablero();
-        juego.setVisible(true);*/
-        //jPanel1.remove(imagen);
         jPanel1.removeAll();
         PintarMatriz();
         jPanel1.revalidate();
@@ -253,9 +264,6 @@ public class Tablero extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         InterfazPrincipal.tablero.InsertarFila();
-        /*this.dispose();
-        Tablero juego = new Tablero();
-        juego.setVisible(true);*/
         jPanel1.removeAll();
         PintarMatriz();
         jPanel1.revalidate();
@@ -290,9 +298,8 @@ public class Tablero extends javax.swing.JFrame {
         }else{
             JComponent comp = (JComponent) evt.getSource();
             TransferHandler handler = comp.getTransferHandler();
-            handler.exportAsDrag(comp, evt, TransferHandler.COPY);
-            
-            MostrarObjeto(InterfazPrincipal.ListaObj);
+            handler.exportAsDrag(comp, evt, TransferHandler.COPY);            
+            MostrarObjeto();
             InterfazPrincipal.ListaObj.Eliminar(Integer.parseInt(jLabel1.getText()));
             jLabel1.revalidate();
             jLabel1.repaint();

@@ -5,7 +5,13 @@
  */
 package Estructuras;
 
+import Grafico.InterfazPrincipal;
+import Grafico.Tablero;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.TransferHandler;
 
 /**
@@ -23,10 +29,12 @@ public class NodoOrtogonal extends JLabel{
     private int tamanoy;
     private int posx;
     private int posy;
-    public JLabel imagen;
+    public  JButton imagen;
     
     private boolean estado;
     private NodoObjeto objeto;
+    
+    public NodoObjeto objetoaux;
     
     public NodoOrtogonal(int posx, int posy){
         this.abajo=null;
@@ -40,9 +48,36 @@ public class NodoOrtogonal extends JLabel{
         this.tamanoy=0;
         this.anteriorFil = null;
         this.abajoCol = null;
-        this.imagen = new JLabel();
-        imagen.setTransferHandler(new TransferHandler("icon"));
-        this.objeto= null;
+        this.imagen = new JButton();
+        this.objeto = null;
+        imagen.setTransferHandler(new TransferHandler("icon"));     
+    }
+       
+    //Metodo para insertar el objeto en el boton, este llamada desde el boton mismo
+    public void Click(Tablero tablero, int ID){
+        imagen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Insertar(ID);
+                tablero.PintarMatriz();
+                tablero.MostrarObjeto();
+            }
+        });
+        
+    }
+    
+    public void Insertar(int ID){
+        if(InterfazPrincipal.ListaPila == true){
+            this.setObjeto(InterfazPrincipal.pila.getCabeza());
+            InterfazPrincipal.pila.Eliminar(ID);
+            System.out.println("Se inserto un "+this.getObjeto().getTipo()+" en este nodo");
+ 
+        }else{
+            this.setObjeto(InterfazPrincipal.ListaObj.getCabeza());
+            InterfazPrincipal.ListaObj.Eliminar(ID);
+            System.out.println("Se inserto un "+this.getObjeto().getTipo()+" en este nodo");
+
+        }
     }
 
     /**
