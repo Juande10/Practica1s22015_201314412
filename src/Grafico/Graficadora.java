@@ -8,6 +8,7 @@ package Grafico;
 import Estructuras.ListaObjetos;
 import Estructuras.MatrizOrtogonal;
 import Estructuras.NodoObjeto;
+import Estructuras.NodoOrtogonal;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -34,8 +35,9 @@ public class Graficadora {
             JOptionPane.showMessageDialog(null, "No hay texto para guardar!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
         } else {
 
-            JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser("C:/Users/JuandeDios/Desktop/");
             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("todos los archivos *.dot", "dot", "Dot"));//filtro para ver solo archivos .edu
+                     
             int seleccion = fileChooser.showSaveDialog(null);
             try {
                 if (seleccion == JFileChooser.APPROVE_OPTION) {//comprueba si ha presionado el boton de aceptar
@@ -113,7 +115,7 @@ public class Graficadora {
         texto = texto + ";\n";
         texto = "digraph G\n{\n node [shape=rectangule];\n"
                 + "node [style=filled];\n"
-                + "node [fillcolor=\"#EEEEEE\"]\n;"
+                + "node [fillcolor=\"#EEEEEE\"];\n"
                 + "node [color=\"#EEEEEE\"]\n"
                 + "edge [color=\"#31CEF0\"]\n"
                 + "" + texto + ""
@@ -121,6 +123,30 @@ public class Graficadora {
         //escribir(texto, "ListaObjetos" + perso + ".dot");
         //crear("ListaObjetos" + perso + ".dot", "ListaPersonajes" + perso + ".png");
         save(texto, "ListaObjetos"+perso+".png");
+    }
+    
+    public void GraficarMatriz(MatrizOrtogonal matriz,String perso){
+        NodoOrtogonal aux1;
+        NodoOrtogonal aux2;
+        String texto = "";
+        int contador = 0;
+        for(aux1 = matriz.getRaiz(); aux1 != null; aux1 = aux1.getArriba() ){
+            contador++;
+            texto = texto+ contador +";\n";
+            for(aux2 = aux1.getSiguiente(); aux2 != null; aux2 = aux2.getSiguiente()){
+                contador++;
+                texto = texto+ contador +";\n";
+            }
+        }
+        
+        texto = "digraph G\n{\n node [shape=rectangule];\n"
+                + "node [style=filled];\n"
+                + "node [fillcolor=\"#EEEEEE\"];\n"
+                + "node [color=\"#EEEEEE\"]\n"
+                + "edge [color=\"#31CEF0\"]\n"
+                + "" + texto + ""
+                + "\n}";
+        save(texto, "MatrizOrtogonal"+perso+".png");
     }
     
     public void crear(String entrada, String Salida) {

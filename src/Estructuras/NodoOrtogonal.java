@@ -42,6 +42,7 @@ public class NodoOrtogonal extends JLabel{
         this.abajoCol = null;
         this.imagen = new JLabel();
         imagen.setTransferHandler(new TransferHandler("icon"));
+        this.objeto= null;
     }
 
     /**
@@ -182,6 +183,20 @@ public class NodoOrtogonal extends JLabel{
      */
     public void setAbajoCol(NodoColumna abajoCol) {
         this.abajoCol = abajoCol;
+    }
+
+    /**
+     * @return the objeto
+     */
+    public NodoObjeto getObjeto() {
+        return objeto;
+    }
+
+    /**
+     * @param objeto the objeto to set
+     */
+    public void setObjeto(NodoObjeto objeto) {
+        this.objeto = objeto;
     }
     
 }

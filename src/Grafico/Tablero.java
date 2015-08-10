@@ -31,7 +31,11 @@ public class Tablero extends javax.swing.JFrame {
     public Tablero() {
         initComponents();
         //muestra objetos en el cuadrito
-        MostrarObjeto(InterfazPrincipal.ListaObj);
+        if(InterfazPrincipal.ListaPila == false){
+            MostrarObjeto(InterfazPrincipal.ListaObj);
+        }else{
+            MostrarObjeto(InterfazPrincipal.pila);
+        }      
         //pinta los nodos de la matriz
         PintarMatriz();
 
@@ -268,6 +272,13 @@ public class Tablero extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Error al crear la grafica de personajes");
         }
+        try {
+            grafica.GraficarMatriz(InterfazPrincipal.tablero, "Matriz");
+            JOptionPane.showMessageDialog(rootPane, "Se creo las grafica de la matriz");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Error al crear la grafica de la matriz");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
@@ -280,10 +291,11 @@ public class Tablero extends javax.swing.JFrame {
             JComponent comp = (JComponent) evt.getSource();
             TransferHandler handler = comp.getTransferHandler();
             handler.exportAsDrag(comp, evt, TransferHandler.COPY);
-            jLabel1.revalidate();
-            jLabel1.repaint();
+            
             MostrarObjeto(InterfazPrincipal.ListaObj);
             InterfazPrincipal.ListaObj.Eliminar(Integer.parseInt(jLabel1.getText()));
+            jLabel1.revalidate();
+            jLabel1.repaint();
         }
         
         

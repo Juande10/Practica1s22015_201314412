@@ -63,14 +63,14 @@ public class FrameEleccion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    ListaObjetos pila = new ListaObjetos();
+    
     public void Pila(ListaObjetos lista){
         NodoObjeto aux;
         NodoObjeto aux2;
         for(aux = lista.getCabeza(); aux != null; aux = aux.getSiguiente()){
             if(aux.getSiguiente() == null){  
                 for(aux2 = aux; aux2!=null; aux2 = aux2.getAnterior()){
-                    this.pila.InsertarObjeto(aux2,aux2.getID(),aux2.getNombre(), aux2.getTipo(), aux2.getImagen());
+                    InterfazPrincipal.pila.InsertarObjeto(aux2,aux2.getID(),aux2.getNombre(), aux2.getTipo(), aux2.getImagen());
                 }
             }
         }
@@ -80,9 +80,13 @@ public class FrameEleccion extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if(jComboBox1.getSelectedIndex() == 0){
-            
-            //pila.Visualizar();
+            Pila(InterfazPrincipal.ListaObj);
+            InterfazPrincipal.pila.Visualizar();
+            InterfazPrincipal.ListaPila = true;
             JOptionPane.showMessageDialog(null, "Selecciono Pila");
+            Tablero juego = new Tablero();
+            this.setVisible(false);
+            juego.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "Selecciono Cola");
             Tablero juego = new Tablero();
