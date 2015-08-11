@@ -5,10 +5,14 @@
  */
 package Grafico;
 
+import Estructuras.NodoObjeto;
 import Estructuras.NodoOrtogonal;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +20,9 @@ import javax.swing.JLabel;
  */
 public class Juego extends javax.swing.JFrame {
 
+    Graficadora grafica = new Graficadora();
+    int vida = 5;
+    int puntos =0;
     /**
      * Creates new form Juego
      */
@@ -24,6 +31,69 @@ public class Juego extends javax.swing.JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         PintarMatriz();
+        jButton2.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                
+                switch(ke.getKeyCode()){
+                    case KeyEvent.VK_RIGHT:
+                    MoverMarioDerecha();
+                    
+                break;
+                
+                case KeyEvent.VK_LEFT:
+                    MoverMarioIzquierda();
+                break;
+                
+                
+        }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                
+            }
+            
+        });
+    }
+    
+    
+    private class Enemigo extends Thread{
+        public void Run(){
+            for(NodoOrtogonal temp1 = InterfazPrincipal.tablero.getRaiz(); temp1 != null; temp1 = temp1.getArriba()){
+                 for(NodoOrtogonal temp2 = temp1; temp2!= null; temp2 = temp2.getSiguiente()){
+                     if(temp2.getObjeto() == null){                     
+                     }else{
+                         if(temp2.getObjeto().getTipo().equals("Koopa")||temp2.getObjeto().getTipo().equals("Goomba")){
+                             
+                             if(temp2.getAnterior().getObjeto() == null){
+                                 temp2.getAnterior().setObjeto(temp2.getObjeto());
+                                 temp2.setObjeto(null);
+                                 try{
+                                     Thread.sleep(1000);
+                                 }catch(Exception e){
+                                     
+                                 }
+                                 PintarMatriz();
+                                 if(temp2.getAnterior() != null){
+                                     LlamarHilo();
+                                 }
+                             }
+                         }
+                     }
+                 }
+            }
+        }
+    }
+    
+    public void LlamarHilo(){
+        Enemigo h = new Enemigo();
+        h.start();
     }
     
     public void PintarMatriz(){
@@ -71,8 +141,15 @@ public class Juego extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,19 +164,37 @@ public class Juego extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jPanel1);
 
+        jButton1.setText("Graficar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Jugar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(32, 32, 32)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(79, 79, 79)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
         );
@@ -107,6 +202,174 @@ public class Juego extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_RIGHT:
+                MoverMarioDerecha();
+                break;
+                
+            case KeyEvent.VK_LEFT:
+                break;
+        }
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            grafica.GraficarMatriz(InterfazPrincipal.tablero, "Matriz");
+            JOptionPane.showMessageDialog(rootPane, "Se creo las grafica de la matriz");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Error al crear la grafica de la matriz");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    public void MoverMarioDerecha(){
+        NodoObjeto temp;
+        Boolean i= true;
+        for(NodoOrtogonal temp1 = InterfazPrincipal.tablero.getRaiz(); temp1 != null; temp1 = temp1.getArriba()){
+            for(NodoOrtogonal temp2 = temp1; temp2!= null; temp2 = temp2.getSiguiente()){
+                if(temp2.getObjeto() == null){                   
+                }else{
+                    if(temp2.getObjeto().getTipo().equals("Mario") && i == true){                       
+                        if(temp2.getSiguiente().getObjeto() == null && temp2.getSiguiente().getAbajo().getObjeto() != null){                            
+                            temp2.getSiguiente().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            i = false;
+                        }
+                        else if(temp2.getSiguiente().getObjeto() == null && temp2.getSiguiente().getAbajo().getObjeto() == null){                            
+                            temp2.getSiguiente().getAbajo().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            JOptionPane.showMessageDialog(null,"Perdio");
+                            i = false;
+                        }
+                        else if(temp2.getSiguiente().getObjeto().getTipo().equals("Hongo")){
+                            temp2.getSiguiente().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            this.vida = this.vida + 1;
+                            System.out.println("Se ha aumentado una vida");
+                            System.out.println("Su vida actual es: "+this.vida);
+                            i=false;
+                        }
+                        else if(temp2.getSiguiente().getObjeto().getTipo().equals("Moneda")){
+                            temp2.getSiguiente().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            this.puntos = this.puntos + 1;
+                            System.out.println("Ha ganado 1 punto!");
+                            System.out.println("Sus puntos actuales son: "+this.puntos);
+                            i=false;
+                        }
+                        else if(temp2.getSiguiente().getObjeto().getTipo().equals("Castillo")){
+                            temp2.getSiguiente().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            this.puntos = this.puntos + 1;
+                            JOptionPane.showMessageDialog(null,"¡HAS GANADO!");
+                            i=false;
+                        }
+                        else if(temp2.getSiguiente() == null){
+                            System.out.println("Llego al final");
+                        }
+                        else if(temp2.getSiguiente().getObjeto().getTipo().equals("Pared")){
+                            
+                        }else if(temp2.getSiguiente().getObjeto().getTipo().equals("Goomba") || temp2.getSiguiente().getObjeto().getTipo().equals("Koopa")){
+                            if(this.vida<=0){
+                                JOptionPane.showMessageDialog(null, "Ha perdido");
+                                i = false;
+                            }else{
+                                this.vida = vida - 1;
+                                System.out.println("Su vida actual es: "+this.vida);
+                                i = false;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public void MoverMarioIzquierda(){
+        NodoObjeto temp;
+        Boolean i= true;
+        try{
+            for(NodoOrtogonal temp1 = InterfazPrincipal.tablero.getRaiz(); temp1 != null; temp1 = temp1.getArriba()){
+            for(NodoOrtogonal temp2 = temp1; temp2!= null; temp2 = temp2.getSiguiente()){
+                if(temp2.getObjeto() == null){                   
+                }else{
+                    if(temp2.getObjeto().getTipo().equals("Mario") && i == true){                       
+                        if(temp2.getAnterior().getObjeto() == null){                            
+                            temp2.getAnterior().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            i = false;
+                        }
+                    }
+                    if(temp2.getObjeto().getTipo().equals("Mario") && i == true){                       
+                        if(temp2.getAnterior().getObjeto() == null){                            
+                            temp2.getAnterior().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            i = false;
+                        }
+                        else if(temp2.getSiguiente().getObjeto() == null && temp2.getSiguiente().getAbajo().getObjeto() == null){                            
+                            temp2.getSiguiente().getAbajo().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            JOptionPane.showMessageDialog(null,"Perdio");
+                            i = false;
+                        }
+                        else if(temp2.getAnterior().getObjeto().getTipo().equals("Hongo")){
+                            temp2.getAnterior().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            this.vida = this.vida + 1;
+                            System.out.println("Se ha aumentado una vida");
+                            System.out.println("Su vida actual es: "+this.vida);
+                            i=false;
+                        }
+                        else if(temp2.getAnterior().getObjeto().getTipo().equals("Moneda")){
+                            temp2.getAnterior().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            this.puntos = this.puntos + 1;
+                            System.out.println("Ha ganado 1 punto!");
+                            System.out.println("Sus puntos actuales son: "+this.puntos);
+                            i=false;
+                        }else if(temp2.getAnterior().getObjeto().getTipo().equals("Castillo")){
+                            temp2.getAnterior().setObjeto(temp2.getObjeto());
+                            temp2.setObjeto(null);
+                            PintarMatriz();
+                            this.puntos = this.puntos + 1;
+                            JOptionPane.showMessageDialog(null,"¡HAS GANADO!");
+                            i=false;
+                        }
+                        else if(temp2.getAnterior().getObjeto().getTipo().equals("Goomba") || temp2.getAnterior().getObjeto().getTipo().equals("Koopa")){
+                            if(this.vida<=0){
+                                JOptionPane.showMessageDialog(null, "Ha perdido");
+                                i = false;
+                            }else{
+                                this.vida = vida - 1;
+                                System.out.println("Su vida actual es: "+this.vida);
+                                i = false;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+        }catch(Exception e){
+            
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -143,6 +406,8 @@ public class Juego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

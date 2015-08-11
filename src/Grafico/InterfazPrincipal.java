@@ -23,6 +23,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     public static final ListaObjetos pila = new ListaObjetos();
     public static Boolean ListaPila = false;
     public static MatrizOrtogonal tablero = new MatrizOrtogonal();
+    
+    
     /**
      * Creates new form InterfazPrincipal
      */

@@ -30,6 +30,14 @@ public class InterfazAgregar extends javax.swing.JFrame {
         this.setVisible(true);
         initComponents();
         setLocationRelativeTo(null);
+        this.txtSuelo.setText("Suelo");
+        this.txtCastillo.setText("Castillo");
+        this.txtGoomba.setText("Goomba");
+        this.txtHongo.setText("Hongo");
+        this.txtMario.setText("Mario");
+        this.txtMoneda.setText("Moneda");
+        this.txtPared.setText("Pared");
+        this.txtTortuga.setText("Tortuga");
     }
 
     /**

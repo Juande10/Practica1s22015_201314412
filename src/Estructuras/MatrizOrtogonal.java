@@ -10,6 +10,7 @@ public class MatrizOrtogonal {
     private NodoColumna columna;
     private NodoFila fila;
     private NodoOrtogonal raiz;
+    private NodoOrtogonal personaje;
     
     public MatrizOrtogonal(){
         this.cabeza = new NodoRaiz();
@@ -294,5 +295,19 @@ public class MatrizOrtogonal {
      */
     public void setRaiz(NodoOrtogonal raiz) {
         this.raiz = raiz;
+    }
+
+    /**
+     * @return the personaje
+     */
+    public NodoOrtogonal getPersonaje() {
+        return personaje;
+    }
+
+    /**
+     * @param personaje the personaje to set
+     */
+    public void setPersonaje(NodoOrtogonal personaje) {
+        this.personaje = personaje;
     }
 }

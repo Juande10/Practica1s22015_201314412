@@ -25,6 +25,7 @@ import javax.swing.TransferHandler;
  */
 public class Tablero extends javax.swing.JFrame {
 
+    public static MatrizOrtogonal MClon = InterfazPrincipal.tablero;
     Graficadora grafica = new Graficadora();
     int IdObj;
     /**
@@ -326,21 +327,9 @@ public class Tablero extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(InterfazPrincipal.ListaPila == true){
-            if(InterfazPrincipal.pila.getCabeza() != null){
-                this.setVisible(false);
-                Juego nuevo = new Juego();
-            }else{
-                JOptionPane.showMessageDialog(null, "Aun le quedan objetos por usar");
-            }
-        }else{
-            if(InterfazPrincipal.ListaObj.getCabeza() != null){
-                this.setVisible(false);
-                Juego nuevo = new Juego();
-            }else{
-                JOptionPane.showMessageDialog(null, "Aun le quedan objetos por usar");
-            }
-        }      
+        Juego nuevo = new Juego();
+        nuevo.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     

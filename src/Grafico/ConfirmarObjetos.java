@@ -7,6 +7,7 @@ package Grafico;
 
 import Estructuras.ListaObjetos;
 import Estructuras.NodoObjeto;
+import Estructuras.NodoOrtogonal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -20,6 +21,8 @@ import javax.swing.JPanel;
  */
 public class ConfirmarObjetos extends javax.swing.JFrame {
 
+    int Mario =0;
+    int Castillo = 0;
     /**
      * Creates new form ConfirmarObjetos
      */
@@ -184,9 +187,21 @@ public class ConfirmarObjetos extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        FrameEleccion elegir = new FrameEleccion();
-        this.setVisible(false);
-        elegir.setVisible(true);
+        for(NodoObjeto aux = InterfazPrincipal.ListaObj.getCabeza(); aux != null; aux = aux.getSiguiente()){
+            if(aux.getTipo().equals("Mario")){
+                this.Mario = 1;
+            }else if(aux.getTipo().equals("Castillo")){
+                this.Castillo=1;
+            }
+        }
+        if(this.Mario == 1 && this.Castillo == 1){
+            FrameEleccion elegir = new FrameEleccion();
+            this.setVisible(false);
+            elegir.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Le falta mario o castillo");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -195,6 +210,7 @@ public class ConfirmarObjetos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
@@ -230,6 +246,7 @@ public class ConfirmarObjetos extends javax.swing.JFrame {
         });
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

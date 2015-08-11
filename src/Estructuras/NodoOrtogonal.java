@@ -55,6 +55,8 @@ public class NodoOrtogonal implements Runnable{
         
     }
        
+    
+    
     //Metodo para insertar el objeto en el boton, este llamada desde el boton mismo
     public void Click(Tablero tablero, int ID){
         this.imagen.addActionListener(new ActionListener() {
