@@ -12,6 +12,7 @@ import Estructuras.NodoOrtogonal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,13 +42,12 @@ public class Tablero extends javax.swing.JFrame {
         
         //imagen.setTransferHandler(new TransferHandler("icon"));
     }
-    
+    //Metodo para mostrar la imagen del objeto en el label
     public void MostrarObjeto(){
         jLabel1.removeAll();
         if(InterfazPrincipal.ListaPila == true){
             if(InterfazPrincipal.pila.getCabeza() == null){
-            jLabel1.setIcon(null);
-            jLabel1.setText(null);
+            jLabel1.setText("Vacio");
             }else{
                 NodoObjeto aux = InterfazPrincipal.pila.getCabeza();
                 this.jLabel1.setText(Integer.toString(aux.getID()));
@@ -55,24 +55,17 @@ public class Tablero extends javax.swing.JFrame {
             }
         }else{
             if(InterfazPrincipal.ListaObj.getCabeza() == null){
-            jLabel1.setIcon(null);
-            jLabel1.setText(null);
+            jLabel1.setText("Vacio");
             }else{
                 NodoObjeto aux = InterfazPrincipal.ListaObj.getCabeza();
                 this.jLabel1.setText(Integer.toString(aux.getID()));
                 this.jLabel1.setIcon(aux.getImagen());
             }
         }
-        
-        
-        
     }
-    
-    private void jLabel1ActionPerformed(){
-        
-    }
-    
+    //Metodo para pintar la matriz
     public void PintarMatriz(/*MatrizOrtogonal Ortogonal*/){
+        jPanel1.removeAll();
         ImageIcon nuevoicon = new ImageIcon(getClass().getResource("/Imagenes/Cielo1.png"));
          NodoOrtogonal aux1;
          NodoOrtogonal aux2;
@@ -89,27 +82,28 @@ public class Tablero extends javax.swing.JFrame {
             y++;
             while(aux3 != null){
                 x++;
-                /*imagen = new JLabel();
-                imagen.setText("("+aux3.getPosx()+","+aux3.getPosy()+")");
-                //imagen.setIcon(nuevoicon);
-                imagen.setBounds((35*x),(35*y), 34, 34);*/
-                aux3.Click(this,Integer.parseInt(this.jLabel1.getText()));
-                aux3.imagen.setBounds(40*x, 40*y, 39, 39);
+                aux3.imagen = new JButton();
+                aux3.imagen.setBounds(40*x, 40*y, 39, 39);  
+                if(this.jLabel1.getText().equals("Vacio")){
+                    this.remove(jLabel1);
+                }else{
+                    aux3.Click(this,Integer.parseInt(this.jLabel1.getText()));
+                }
+                
                 if(aux3.getObjeto() == null){
                     aux3.imagen.setIcon(nuevoicon);
                 }else{
                     aux3.imagen.setIcon(aux3.getObjeto().getImagen());
-                }
-                jLabel1.removeAll();
+                }               
+                //jLabel1.removeAll();
                 MostrarObjeto();
                 jPanel1.revalidate();
                 jPanel1.repaint();
-                jPanel1.add(aux3.imagen);
+                jPanel1.add(aux3.imagen);               
                 aux3 = aux3.getSiguiente();              
             }
             x=0;           
-        }        
-        
+        }               
         //Imprime de la primera a la ultima fila
         /*for(aux1 = cabeza; aux1 != null; aux1 = aux1.getArriba()){
              aux2 = aux1;
@@ -127,7 +121,6 @@ public class Tablero extends javax.swing.JFrame {
              x=0;
          }*/
     }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -181,7 +174,12 @@ public class Tablero extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel2.setText("Objetos para Utilizar:");
 
-        jButton1.setText("Pausa");
+        jButton1.setText("Jugar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Insertar Columna");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -213,9 +211,9 @@ public class Tablero extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton4)
-                        .addGap(90, 90, 90)
-                        .addComponent(jButton1)
-                        .addGap(86, 86, 86)
+                        .addGap(71, 71, 71)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)
                         .addComponent(jButton2)
                         .addGap(35, 35, 35)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,8 +238,8 @@ public class Tablero extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addComponent(jButton4))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -291,7 +289,7 @@ public class Tablero extends javax.swing.JFrame {
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
         // TODO add your handling code here:
-        if(InterfazPrincipal.ListaObj.getCabeza() == null){
+        /*if(InterfazPrincipal.ListaObj.getCabeza() == null){
             jLabel1.setIcon(null);
             jLabel1.setText(null);
             JOptionPane.showMessageDialog(null, "Ya no hay objetos en la lista");
@@ -304,8 +302,7 @@ public class Tablero extends javax.swing.JFrame {
             jLabel1.revalidate();
             jLabel1.repaint();
         }
-        
-        
+        */     
     }//GEN-LAST:event_jLabel1MousePressed
 
     
@@ -326,6 +323,25 @@ public class Tablero extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jLabel1MouseReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(InterfazPrincipal.ListaPila == true){
+            if(InterfazPrincipal.pila.getCabeza() != null){
+                this.setVisible(false);
+                Juego nuevo = new Juego();
+            }else{
+                JOptionPane.showMessageDialog(null, "Aun le quedan objetos por usar");
+            }
+        }else{
+            if(InterfazPrincipal.ListaObj.getCabeza() != null){
+                this.setVisible(false);
+                Juego nuevo = new Juego();
+            }else{
+                JOptionPane.showMessageDialog(null, "Aun le quedan objetos por usar");
+            }
+        }      
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     /**

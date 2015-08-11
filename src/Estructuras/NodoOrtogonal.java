@@ -18,7 +18,7 @@ import javax.swing.TransferHandler;
  *
  * @author Juande
  */
-public class NodoOrtogonal extends JLabel{
+public class NodoOrtogonal implements Runnable{
     public NodoOrtogonal arriba;
     public NodoOrtogonal abajo;
     public NodoOrtogonal siguiente;
@@ -30,6 +30,7 @@ public class NodoOrtogonal extends JLabel{
     private int posx;
     private int posy;
     public  JButton imagen;
+    public JLabel lbl;
     
     private boolean estado;
     private NodoObjeto objeto;
@@ -48,38 +49,40 @@ public class NodoOrtogonal extends JLabel{
         this.tamanoy=0;
         this.anteriorFil = null;
         this.abajoCol = null;
-        this.imagen = new JButton();
+        //this.imagen = new JButton();
         this.objeto = null;
-        imagen.setTransferHandler(new TransferHandler("icon"));     
+        //imagen.setTransferHandler(new TransferHandler("icon"));  
+        
     }
        
     //Metodo para insertar el objeto en el boton, este llamada desde el boton mismo
     public void Click(Tablero tablero, int ID){
-        imagen.addActionListener(new ActionListener() {
+        this.imagen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Insertar(ID);
+                if(InterfazPrincipal.ListaPila == true){
+                    if(InterfazPrincipal.pila.getCabeza() != null){
+                        setObjeto(InterfazPrincipal.pila.getCabeza());
+                        InterfazPrincipal.pila.EliminarCabeza();
+                    }else{
+                        JOptionPane.showMessageDialog(null,"No hay objetos en la lista");
+                    }     
+                        //System.out.println("Actualmente la cabeza es: "+InterfazPrincipal.pila.getCabeza().getNombre());
+                }else{
+                    if(InterfazPrincipal.ListaObj.getCabeza() != null){
+                        setObjeto(InterfazPrincipal.ListaObj.getCabeza());
+                        InterfazPrincipal.ListaObj.EliminarCabeza();
+                        //System.out.println("Actualmente la cabeza es: "+InterfazPrincipal.ListaObj.getCabeza().getNombre());
+                    }else{
+                        JOptionPane.showMessageDialog(null,"No hay objetos en la lista");
+                    }                    
+                }
+                //tablero.MostrarObjeto();
                 tablero.PintarMatriz();
-                tablero.MostrarObjeto();
             }
         });
         
     }
-    
-    public void Insertar(int ID){
-        if(InterfazPrincipal.ListaPila == true){
-            this.setObjeto(InterfazPrincipal.pila.getCabeza());
-            InterfazPrincipal.pila.Eliminar(ID);
-            System.out.println("Se inserto un "+this.getObjeto().getTipo()+" en este nodo");
- 
-        }else{
-            this.setObjeto(InterfazPrincipal.ListaObj.getCabeza());
-            InterfazPrincipal.ListaObj.Eliminar(ID);
-            System.out.println("Se inserto un "+this.getObjeto().getTipo()+" en este nodo");
-
-        }
-    }
-
     /**
      * @return the arriba
      */
@@ -232,6 +235,11 @@ public class NodoOrtogonal extends JLabel{
      */
     public void setObjeto(NodoObjeto objeto) {
         this.objeto = objeto;
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

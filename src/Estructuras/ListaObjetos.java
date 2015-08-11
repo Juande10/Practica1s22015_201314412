@@ -36,14 +36,14 @@ public class ListaObjetos {
     }
 
     public void Eliminar(int ID){
-        if(ID == this.getCabeza().getID()){
-            NodoObjeto aux = this.getCabeza().getSiguiente();
-            if(aux==null){
-                this.cabeza= null;
+        if(this.getCabeza().getID()==ID){
+            if(this.getCabeza().getSiguiente() == null){
+                this.cabeza = null;
             }else{
-                aux.setAnterior(null);
+                NodoObjeto aux = this.getCabeza().getSiguiente();
                 this.setCabeza(aux);
-            }   
+                aux.setAnterior(null);
+            }
         }else{
             NodoObjeto aux;
             for(aux = this.getCabeza(); aux != null; aux = aux.getSiguiente()){
@@ -62,6 +62,16 @@ public class ListaObjetos {
                     aux.setAnterior(null);
                 }
             }
+        }
+    }
+    
+    public void EliminarCabeza(){
+        NodoObjeto aux = this.getCabeza().getSiguiente();
+        if(aux != null){
+            aux.setAnterior(null);
+            this.setCabeza(aux);
+        }else{
+            this.cabeza = null;
         }
     }
     

@@ -88,8 +88,7 @@ public class MatrizOrtogonal {
                 //si estamos en la columna 1 pero en j > 1 es decir alguna fila mas arriba de la raiz
                 else if(x==1 && j > 1){
                     NodoOrtogonal actual;
-                    nuevo2 = new NodoOrtogonal(1,j);
-                    
+                    nuevo2 = new NodoOrtogonal(1,j);                 
                     System.out.println("Se creo el nodo de la posicion que esta en la columna: "+ x +" y en la fila: "+j);
                     actual = getRaiz();
                     

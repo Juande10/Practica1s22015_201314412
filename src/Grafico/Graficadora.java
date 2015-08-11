@@ -23,6 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Graficadora {
     ListaObjetos objetos;
     MatrizOrtogonal matriz;
+    NodoOrtogonal ultimoesquina;
     
     public Graficadora(){
         
@@ -129,21 +130,59 @@ public class Graficadora {
         NodoOrtogonal aux1;
         NodoOrtogonal aux2;
         String texto = "";
-        int contador = 0;
-        for(aux1 = matriz.getRaiz(); aux1 != null; aux1 = aux1.getArriba() ){
-            contador++;
-            texto = texto+ contador +";\n";
-            for(aux2 = aux1.getSiguiente(); aux2 != null; aux2 = aux2.getSiguiente()){
-                contador++;
-                texto = texto+ contador +";\n";
+        int x=0;
+        int y;
+        for(NodoOrtogonal i=matriz.getRaiz(); i!=null;i = i.getArriba()){
+            y=0;
+            for(NodoOrtogonal j=i;j!=null;j=j.getSiguiente()){
+                if(j.getObjeto()!=null){
+                    texto+="node"+x+""+y+"[label=\"<f0> "+x+"|"+j.getObjeto().getNombre()+"|"+y+"\"];\n";   }
+                else{
+                    texto+="node"+x+""+y+"[label=\"<f0> "+x+"|vacio|"+y+"\"];\n";
+                }
+            y++;
             }
+            x++;
+        }    
+        x=0;
+        for(NodoOrtogonal i=matriz.getRaiz();i!=null;i=i.getArriba()){
+            y=0;
+            for(NodoOrtogonal j=i ;j!=null;j=j.getSiguiente()){
+                if(j.getSiguiente() != null){
+                    texto+="node"+x+""+y+"->node"+x+""+(y+1)+";\n";
+                }
+                if(j.getAnterior()!=null){
+                    texto +="node"+x+""+y+"->node"+x+""+(y-1)+";\n";
+                    texto +="{rank=same; node"+x+""+(y-1)+" node"+x+""+y+"}\n";
+                    }
+                    y++;
+                }
+                x++;
+        }
+        x=0;
+        for(NodoOrtogonal i=matriz.getRaiz();i!=null;i=i.getArriba()){
+            y=0;      
+            for(NodoOrtogonal j=i;j!=null;j=j.getSiguiente()){
+                if(j.getAbajo()!=null){
+                    texto+="node"+x+""+y+"->node"+(x-1)+""+y+";\n";
+                }
+                if(j.getArriba()!=null){
+                    texto+="node"+x+""+y+"->node"+(x+1)+""+y+";\n";
+                }
+                y++;
+            }
+            x++;
         }
         
+        
         texto = "digraph G\n{\n node [shape=rectangule];\n"
-                + "node [style=filled];\n"
-                + "node [fillcolor=\"#EEEEEE\"];\n"
-                + "node [color=\"#EEEEEE\"]\n"
-                + "edge [color=\"#31CEF0\"]\n"
+                + "rankdir =BT;\n"
+                + "nodesep=0.8"
+                + "node [shape=record];"
+                //+ "node [style=filled];\n"
+                //+ "node [fillcolor=\"#EEEEEE\"];\n"
+                //+ "node [color=\"#EEEEEE\"]\n"
+                //+ "edge [color=\"#31CEF0\"]\n"
                 + "" + texto + ""
                 + "\n}";
         save(texto, "MatrizOrtogonal"+perso+".png");
